@@ -32,6 +32,12 @@ class Interval:
         else:
             return Interval(self.numOne * other.numTwo,self.numTwo * other.numOne)
 
+    def __eq__(self, other):
+        "Overrides eq to check for interval equality"
+        if (self.numOne == other.numOne and self.numTwo == other.numTwo):
+            return True
+        else:
+            return False
 
 
 a = Interval(2,3)     # The interval from 2 ... 3
