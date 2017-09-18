@@ -1,8 +1,12 @@
 class Interval:
     def __init__(self, first=0, second=0):
         "Constructor"
-        self.numOne = first
-        self.numTwo = second
+        if first > second:
+            self.numOne = second
+            self.numTwo = first
+        else:
+            self.numOne = first
+            self.numTwo = second
 
     def __str__(self):
         "Used by print"
@@ -14,12 +18,12 @@ class Interval:
     def __add__(self, other):
         "Overloads '+' symbol"
         if(str(other).isnumeric()):
-            return Interval(self.numTwo+other,self.numOne+other)
+            return Interval(self.numOne+other,self.numTwo+other)
         else:
-            if(self.numOne > other.numTwo):
-                return Interval(other.numTwo,self.numTwo+other.numOne)
+            if(self.numOne > other.numOne):
+                return Interval(other.numOne,self.numTwo+other.numTwo)
             else:
-                return Interval(self.numOne,self.numTwo+other.numOne)
+                return Interval(self.numOne,self.numTwo+other.numTwo)
 
     def __radd__(self, other):
         "Does right '+' stuff"
@@ -30,14 +34,11 @@ class Interval:
         if(str(other).isnumeric()):
             return Interval(self.numOne * other,self.numTwo * other)
         else:
-            return Interval(self.numOne * other.numTwo,self.numTwo * other.numOne)
+            return Interval(self.numOne * other.numOne,self.numTwo * other.numTwo)
 
     def __eq__(self, other):
         "Overrides eq to check for interval equality"
-        if (self.numOne == other.numOne and self.numTwo == other.numTwo):
-            return True
-        else:
-            return False
+        return self.numOne == other.numOne and self.numTwo == other.numTwo
 
 
 a = Interval(2,3)     # The interval from 2 ... 3
@@ -45,12 +46,11 @@ b = Interval(4)       # the interval from 0 ... 4
 c = Interval()	      # The interval 0 ... 0
 aa = Interval(2,3)    # Also the interval 2 ... 3
 
-print("Should be 2...3 ", a)		# Needs __str__() to work
+print("Should be 2...3 ", a)        # Needs __str__() to work
 print("Should be 0...7 ", a+b)		# Needs __add__() to work
 print("Should be 10...14 ", 10+b)	# Needs __radd__() to work
 print("Should be 0...12 ", a*b)		# Needs __mul__() to work
 print("Should be 4...6 ", a*2)		# Needs __mul__() with an int to work
-
 
 print("should be true ", a==a)		# Needs __eq__() to work
 print("Should be true ", a==aa)		# ditto
