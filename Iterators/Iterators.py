@@ -20,11 +20,28 @@ class Hello:
         return self
 
     def __next__(self):
-        if self.word:
-            return self.word.pop
+        while self.word:
+            return self.word.pop(0)
         else:
             raise StopIteration
 
+class DoubleIt:
+    "Makes an iterator that returns the double of an inputted sequence"
+    def __init__(self, *args):
+        self.entries = list(args[0])
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.entries:
+            return self.entries.pop(0) * 2
+        else:
+            raise StopIteration
+
+class SecondDoubleIt:
+    "Makes an iterator that returns the double of multiple inputted arguments"
+    
 
 print("\n\nShould be hello")
 for x in Hello():
@@ -33,4 +50,22 @@ for x in Hello():
 print("Should be 12 12 12 12 12 ...")
 #for x in Twelve():
  #   print(x, end=" ")
+#It does, but obviously loops to infinity.
 
+print("\n\nShould be 2 6 4 8")
+for x in DoubleIt([1,3,2,4]):
+    print(x, end = " ")
+print("\n\nShould be empty")
+for x in DoubleIt([]):
+    print(x)
+
+print("\n\nShould be 2 6 4 8")
+for x in SecondDoubleIt(1,3,2,4):
+    print(x, end = " ")
+print("\nShould be 2 2 2 2 2 4 4 8 8 8 8 ")
+for x in SecondDoubleIt(1,1,1,1,1,2,2,4,4,4,4):
+    print(x, end = " ")
+
+print("\n\nShould be empty")
+for x in SecondDoubleIt([]):
+    print(x)
