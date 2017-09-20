@@ -20,20 +20,10 @@ class Hello:
         return self
 
     def __next__(self):
-        if self.count == len(self.word):
+        if self.word:
+            return self.word.pop
+        else:
             raise StopIteration
-        self.count = self.count + 1
-        return self.word[self.count-1]
-
-class doubleIt:
-    "Returns the double of the input sequence"
-    def __init__(self):
-
-
-    def __iter__(self):
-
-
-    def __next__(self):
 
 
 print("\n\nShould be hello")
