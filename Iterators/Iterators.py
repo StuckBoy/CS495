@@ -79,6 +79,21 @@ class JustLetters:
         else:
             raise StopIteration
 
+class Words:
+    "Takes in a string and separates out words based on whitespace."
+    def __init__(self, *args):
+        sentence = str(*args)
+        self.sWords = sentence.split()
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.sWords:
+            return self.sWords.pop(0)
+        else:
+            raise StopIteration
+
 print("Should be 12 12 12 12 12 ...")
 #for x in Twelve():
  #   print(x, end=" ")
@@ -112,3 +127,10 @@ for letter in JustLetters(["a", 4, 5, "b", "c", 2, "d"]):
 print("\n\nShould be a b c")
 for letter in JustLetters(["a", 4, 5, "b", "c", 2]):
     print(letter, end = " ")
+
+print("\n\nShould be I, Love, Cheese,")
+for word in Words("I Love Cheese"):
+    print(word, end=",")
+print("\n\nShould be empty")
+for word in Words(""):
+    print(word, end=",")
