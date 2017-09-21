@@ -41,16 +41,52 @@ class DoubleIt:
 
 class SecondDoubleIt:
     "Makes an iterator that returns the double of multiple inputted arguments"
-    
+    def __init__(self, *kwargs):
+        self.input = list(kwargs)
 
-print("\n\nShould be hello")
-for x in Hello():
-    print(x)
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.input:
+            return self.input.pop(0) *2
+        else:
+            raise StopIteration
+
+class JustLetters:
+    "Takes in both letters and numbers, but only returns the letters of the input."
+    def __init__(self, *args):
+        self.input = list(args[0])
+        self.letters = []
+        length = len(self.input)
+        while(length != 0):
+            if self.input:
+                thing = self.input.pop(0)
+                if str(thing).isalpha():
+                    self.letters.append(thing)
+                else:
+                    continue
+                length = length - 1
+            else:
+                break
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.letters:
+            return self.letters.pop(0)
+        else:
+            raise StopIteration
 
 print("Should be 12 12 12 12 12 ...")
 #for x in Twelve():
  #   print(x, end=" ")
 #It does, but obviously loops to infinity.
+
+print("\n\nShould be hello")
+for x in Hello():
+    print(x)
 
 print("\n\nShould be 2 6 4 8")
 for x in DoubleIt([1,3,2,4]):
@@ -69,3 +105,10 @@ for x in SecondDoubleIt(1,1,1,1,1,2,2,4,4,4,4):
 print("\n\nShould be empty")
 for x in SecondDoubleIt([]):
     print(x)
+
+print("\n\nShould be a b c d")
+for letter in JustLetters(["a", 4, 5, "b", "c", 2, "d"]):
+    print(letter, end = " ")
+print("\n\nShould be a b c")
+for letter in JustLetters(["a", 4, 5, "b", "c", 2]):
+    print(letter, end = " ")
