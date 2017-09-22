@@ -58,6 +58,9 @@ class JustLetters:
     def __init__(self, *args):
         self.input = list(args[0])
         self.letters = []
+        #for x if self.input isinstance(x, str):
+         #   letters.append(x)
+
         length = len(self.input)
         while(length != 0):
             if self.input:
