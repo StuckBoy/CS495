@@ -7,6 +7,7 @@ from random import randint
 from collections import Counter
 from urllib.request import Request, urlopen, URLError, HTTPError
 import re  # regular expresions
+import operator
 
 class CountedSet():
     def __init__(self):
@@ -36,10 +37,22 @@ class CountedSet():
         else:
             return 0
 
-    def most_common(self, depth):
+    def most_common(self, depth = 0):
         "Scans through a CountedSet and gives the most common pairs up to 'depth'."
-        
+        dictList = list(self.myDict.items())
+        dictList.sort(key=operator.itemgetter(1), reverse=True)
+        topRequested = []
+        if depth == 0: depth = len(dictList)
+        elif depth > len(dictList):
+            depth = len(dictList)
+        a = 1
+        while a <= depth:
+            newtup = tuple((dictList[a - 1][0], dictList[a - 1][1]))
+            topRequested.append(newtup)
+            a += 1
+        return topRequested
 
+# --- Test Stuff Below ---
 
 if __name__ == "__main__":
     # easy tests
