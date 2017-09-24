@@ -10,14 +10,36 @@ import re  # regular expresions
 
 class CountedSet():
     def __init__(self):
+        "Empty initializer for CountedSet."
         self.myDict = {}
 
     def __iadd__(self, other):
-        if other in self.myDict:
-            self.myDict[other] = self.myDict[other] + 1
+        "Overrides += operator to add keys and CountedSets."
+        if isinstance(other, CountedSet):
+            for key, value in other.myDict.items():
+                if key in self.myDict:
+                    self.myDict[key] += other.myDict[key]
+                else:
+                    self.myDict[key] = other.myDict[key]
+            return self
         else:
-            self.myDict[other] = 1
-        return self
+            if other in self.myDict:
+                self.myDict[other] = self.myDict[other] + 1
+            else:
+                self.myDict[other] = 1
+            return self
+
+    def __getitem__(self, item):
+        "Overrides getitem to check for existing keys."
+        if item in self.myDict:
+            return self.myDict[item]
+        else:
+            return 0
+
+    def most_common(self, depth):
+        "Scans through a CountedSet and gives the most common pairs up to 'depth'."
+        
+
 
 if __name__ == "__main__":
     # easy tests
